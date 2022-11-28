@@ -1,11 +1,11 @@
-# Consesionario Car Dealership
+# App de ayudas
 
-Este es un proyecto para el tercer ciclo de aprendizaje de programación básica de MINTIC Colombia
+Este es un proyecto para el cuarto ciclo de aprendizaje de programación básica de MINTIC Colombia
 
 ### ¿Para qué es este repositorio?
 
-* Sistema para un consesionario (Car Dealership) que soporta la gestión de todos los diferentes tipos de vehículos.
-* El sistema gestiona el control de compras y envíos de los vehículos a su destino.
+* Sistema para una app para tutoriales ayuda y ensenianza.
+* El sistema gestiona el control de compras del contenido visto.
 * El sistema está construído con Django y postgresql.
 
 ### ¿Cómo lo configuro?
