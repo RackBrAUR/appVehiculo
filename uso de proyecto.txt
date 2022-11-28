@@ -1,0 +1,3 @@
+se utilizara librerias de JS en el proyecto
+REACT (PARA LA INTERFAZ DEL USUARIO) Frontend
+Node.js (backend)
