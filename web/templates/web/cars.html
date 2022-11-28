@@ -1,0 +1,346 @@
+{% extends 'web/base_alt.html' %}
+{% load staticfiles %}
+{% block title %}Vehiculos{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nouislider.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/css_style.default.css' %}" id="theme-stylesheet">
+    <script src="{% static 'js/nouislider.min.js' %}"></script>
+{% endblock %}
+
+{% block menu %}
+    <ul class="navbar-nav ml-auto align-items-center">
+        <li class="nav-item">
+            <form class="form-inline" id="searchbar">
+                <input class="form-control mx-2" type="text" name="search" placeholder="Buscar">
+                <button class="btn btn-outline-success mx-2" type="submit" id="submit">Buscar</button>
+            </form>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="{% url 'web:compare' %}">Comparar</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:dashboard' %}">Bienvenido, {{ user.last_name }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:logout' %}">Salir</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:login' %}">Iniciar sesión</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:register' %}">Registrarse</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <section class="hero hero-page gray-bg padding-small">
+        <div class="container">
+            <div class="row d-flex">
+                <div class="col-lg-9 order-2 order-lg-1">
+                    <h1>Vehículos</h1>
+                    <p class="lead text-muted">Todos los vehículos disponibles</p>
+                </div>
+                <div class="col-lg-3 text-right order-1 order-lg-2">
+                    <ul class="breadcrumb justify-content-lg-end">
+                        <li class="breadcrumb-item"><a href="{% url 'web:index' %}">Inicio</a></li>
+                        <li class="breadcrumb-item active">vehículo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <main>
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar-->
+                <div class="sidebar col-xl-3 col-lg-4 sidebar">
+                    <form action="#" id="filter">
+                        <div class="block">
+                            <h6 class="text-uppercase">Tipo de vehículo</h6>
+                            <div class="form-group mb-1">
+                                <input id="all" type="radio" name="tipo" checked class="radio-template" value="all">
+                                <label for="all">Todos</label>
+                            </div>
+                            <div class="form-group mb-1">
+                                <input id="Ligero" type="radio" name="tipo" class="radio-template" value="Ligero">
+                                <label for="Ligero">Ligero</label>
+                            </div>
+                            <div class="form-group mb-1">
+                                <input id="Pesado" type="radio" name="tipo" class="radio-template" value="Pesado">
+                                <label for="Pesado">Pesado</label>
+                            </div>
+                            <div class="form-group mb-1">
+                                <input id="Especial" type="radio" name="tipo" class="radio-template" value="Especial">
+                                <label for="Especial">Especial</label>
+                            </div>
+                            <div class="form-group mb-1">
+                                <input id="Agricola" type="radio" name="tipo" class="radio-template" value="Agricola">
+                                <label for="Agricola">Agrícola</label>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <h6 class="text-uppercase">Tipo de combustible </h6>
+                            <div class="form-group mb-1">
+                                <input id="Gasolina" type="checkbox" name="combustible" checked
+                                       class="checkbox-template" value="Gasolina">
+                                <label for="Gasolina">Gasolina</label>
+                            </div>
+                            <div class="form-group mb-1">
+                                <input id="Diesel" type="checkbox" name="combustible" checked
+                                       class="checkbox-template" value="Diesel">
+                                <label for="Diesel">Diesel</label>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <h6 class="text-uppercase">Filtrar por precio </h6>
+                            <div id="slider-snap"></div>
+                            <div class="value d-flex justify-content-between">
+                                <div class="min">Desde $ <span id="slider-snap-value-lower" class="example-val"></span></div>
+                                <div class="max">&nbsp; Hasta $ <span id="slider-snap-value-upper" class="example-val"></span></div>
+                            </div>
+                        </div>
+                            <a href="#" class="btn btn-dark" onclick="getparams(0,9);">filtrar</a>
+                    </form>
+                </div>
+                <!-- /Sidebar end-->
+                <!-- Grid -->
+                <div class="products-grid col-xl-9 col-lg-8 sidebar-left">
+                    <div class="row grid">
+                        <!-- item-->
+                    </div>
+                        
+
+                    <br>
+                    <nav aria-label="page navigation example" class="d-flex justify-content-center">
+                        <ul class="pagination pagination-custom">
+                            <li class="page-item" id="prev" onclick="previous()"><a href="#" aria-label="Previous" class="page-link"><span
+                                    aria-hidden="true">Anterior</span><span class="sr-only">Anterior</span></a></li>
+                            <li class="page-item" id="next" onclick="next()"><a href="#" aria-label="Next" class="page-link"><span
+                                    aria-hidden="true">Siguiente</span><span class="sr-only">Siguiente     </span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- / Grid End-->
+            </div>
+        </div>
+    </main>
+{% endblock %}
+{% block scripts %}
+    <script>
+        var tipo = '';
+        var filter = false;
+        var q = false;
+        var start = 0;
+        var end = start + 9;
+        var snapSlider = document.getElementById('slider-snap');
+
+        noUiSlider.create(snapSlider, {
+            start: [400000, 200000000],
+            snap: false,
+            connect: true,
+            step: 1,
+            range: {
+                'min': 100000,
+                'max': 1000000000
+            }
+        });
+        var snapValues = [
+            document.getElementById('slider-snap-value-lower'),
+            document.getElementById('slider-snap-value-upper')
+        ];
+        snapSlider.noUiSlider.on('update', function (values, handle) {
+            snapValues[handle].innerHTML = values[handle];
+        });
+
+
+        function tryParseJSON (jsonString){
+            try {
+                var o = JSON.parse(jsonString);
+                if (o && typeof o === "object") {
+                    return o;
+                }
+            }
+            catch (e) { }
+            return false;
+        }
+
+        function previous() {
+            if (filter === true) {
+                if (start === 0) {
+                    // There's no previous then..
+                }
+                else {
+                    start = start - 9;
+                    end = start + 9;
+                    getparams(start, end);
+                }
+            }
+            else if (q === true) {
+                if (start === 0) {
+                    // There's no previous then..
+                }
+                else {
+                    start = start - 9;
+                    end = start + 9;
+                    searchb(start, end);
+                }
+            }
+            else {
+                if (start === 0) {
+                    //There's no previous here
+                }
+                else {
+                    start = start - 9;
+                    end = start + 9;
+                    getGrid(start, end);
+                }
+            }
+        }
+
+
+        function next() {
+            if (filter === true) {
+                start = start + 9;
+                end = start + 9;
+                getparams(start, end);
+            }
+            else if (q === true) {
+                start = start + 9;
+                end = start + 9;
+                searchb(start, end);
+            }
+            else {
+                start = start + 9;
+                end = start + 9;
+                getGrid(start, end);
+            }
+        }
+
+
+        function XMLReq(callback) {
+            var response = '';
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    response = this.responseText;
+                    callback(response);
+                }
+            };
+            return xhttp;
+        }
+
+
+        function getGrid(start, end) {
+            // Get checkbox value here.
+            // And also the my accounts only checkbox
+            var xhttp = XMLReq(fillGrid);
+            var query = 'start=' + start + '&end=' + end;
+            var local = window.location.origin;
+            xhttp.open("GET", local + '/car_dy' + '?' + query, true);
+            xhttp.send();
+        }
+
+        function fillGrid(data) {
+            clear();
+            var local = window.location.origin;
+            var parsed = tryParseJSON(data);
+            if (parsed === false) {
+                //It's not JSON. It's something.
+            }
+            else {
+
+                if (parsed.length === 0) {
+                    var markup = '<p id=error>¡Uh oh! No se han encontrado coches con criterios similares!</p><br>';
+                    $('.grid').append(markup);
+                }
+                else {
+                    for (var obj in parsed) {
+                        var ob = parsed[obj];
+                        var pk = ob['pk'];
+                        var fields = ob['fields'];
+                        var modelo = fields['modelo'];
+                        var marca = fields['marca'];
+                        var precio = fields['precio'];
+                        var foto = fields['foto'];
+
+                        // Now add the table. :)
+                        var markup = '<div class="item col-xl-4 col-md-6">' +
+                            '<div class="product is-gray"> ' +
+                                '<div class="image d-flex align-items-center justify-content-center">' +
+                                    '<img src="'+ local + '/media/' + foto +'" alt="" class="img-fluid w-75">' +
+                                    '<div class="hover-overlay d-flex align-items-center justify-content-center">' +
+                                        '<div class="CTA d-flex align-items-center justify-content-center">' +
+                                            '<a href="' + local + '/car/' + pk +'" class="visit-product active">' +
+                                                '<i class="icon-search"></i>' +
+                                                'View' +
+                                            '</a>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="title">' +
+                                    '<small class="text-muted">' + marca + '</small>' +
+                                        '<a href="' + local + '/car/' + pk + '">' +
+                                            '<h3 class="h6 text-uppercase no-margin-bottom">' + modelo + '</h3>' +
+                                        '</a>' +
+                                        '<span class="price text-muted">$ ' + precio + '</span>' +
+                                '</div>' +
+                            '</div>' +
+                            '</div>';
+
+                        $('.grid').append(markup);
+                    }
+                }
+            }
+        }
+
+        function searchb(start, end) {
+            q = true;
+            filter = false;
+            var term = $('#searchbar').serialize();
+            var xhttp = XMLReq(fillGrid);
+            var local = window.location.origin;
+            var extra = "&start=" + start + "&end=" + end;
+            xhttp.open("GET", local + '/car_s' + '?' + term + extra, true);
+            xhttp.send();
+        }
+
+
+        function clear () {
+            $(".item").remove();
+            $("#error").remove();
+        }
+
+        getGrid(0,9);
+
+        function getGridwparams(params, start, end) {
+            var xhttp = XMLReq(fillGrid);
+            var query = 'start=' + start + '&end=' + end + '&' + params;
+            var local = window.location.origin;
+            xhttp.open("GET", local + '/car_dy' + '?' + query, true);
+            xhttp.send();
+        }
+
+
+        function getparams(start, end) {
+            filter = true;
+            q = false;
+            var r = $('#filter').serialize();
+            var lower = $('#slider-snap-value-lower').text();
+            var upper = $('#slider-snap-value-upper').text();
+            var extra = '&cost_min=' + lower + '&cost_max=' + upper;
+            var final = r + extra;
+            getGridwparams(final, start, end);
+        }
+
+
+        $("#searchbar").submit(function(e){
+            searchb(start, end);
+            return false;
+        });
+
+    </script>
+{% endblock %}

@@ -1,0 +1,258 @@
+{% extends 'web/base_alt.html' %}
+
+{% load staticfiles %}
+{% block title %}{{ car.marca }} {{ car.modelo }}{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/css_style.default.css' %}" id="theme-stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-datepicker.min.css' %}" id="theme-stylesheet">
+{% endblock %}
+{% block menu %}
+    <ul class="navbar-nav ml-auto align-items-center">
+        <li class="nav-item">
+<<<<<<< HEAD
+            <a class="nav-link js-scroll-trigger" href="{% url 'web:cars' %}">Vehiculos</a>
+=======
+            <a class="nav-link js-scroll-trigger" href="{% url 'web:cars' %}">Vehículos</a>
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+        </li>
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:dashboard' %}">Bienvenido, {{ user.last_name }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-t rigger" href="{% url 'web:logout' %}">Salir</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+<<<<<<< HEAD
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:login' %}">Iniciar Sesion</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:register' %}">Registrarme</a>
+=======
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:login' %}">Iniciar sesión</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:register' %}">Registrarse</a>
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <h3 class="my-4">{{ car.marca }}</h3>
+            </div>
+            <!-- /.col-lg-3 -->
+
+            <div class="col-lg-9">
+
+                <div class="card mt-4">
+                    <img class="card-img-top img-fluid" src="{{ car.foto.url }}" alt="">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ car.modelo }}</h3>
+                        <h4>$ {{ car.precio }}</h4>
+                        <p class="card-text">{{ car.descripcion }}</p>
+                        {% if user.is_authenticated %}
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#order" id="orderBtn">
+                            Comprar
+                        </button>
+                        {% else %}
+                        <a class="btn btn-primary" href="{% url 'web:login' %}">Comprar</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- /.card -->
+
+                <div class="card card-outline-secondary my-4">
+                    <div class="card-header">
+                        Especificación
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    Marca
+                                </td>
+                                <td>
+                                    {{ car.marca }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Año
+                                </td>
+                                <td>
+                                    {{ car.anio }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tipo de combustible
+                                </td>
+                                <td>
+                                    {{ car.combustible }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Número de puertas
+                                </td>
+                                <td>
+                                    {{ car.puertas }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tipo de transmisión
+                                </td>
+                                <td>
+                                    {{ car.transmision }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Motor (cc)
+                                </td>
+                                <td>
+                                    {{ car.motor }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Potencia máxima (HP)
+                                </td>
+                                <td>
+                                    {{ car.potencia }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Tipo de vehículo
+                                </td>
+                                <td>
+                                    {{ car.tipo }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Consumo
+                                </td>
+                                <td>
+                                    {{ car.consumo }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Estado
+                                </td>
+                                <td>
+                                    {{ car.estado }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Kilometros
+                                </td>
+                                <td>
+                                    {{ car.kilometros }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    País
+                                </td>
+                                <td>
+                                    {{ car.pais }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col-lg-9 -->
+        </div>
+
+    </div>
+
+
+
+    <div class="modal fade" id="order">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Comprar vehículo</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form id="orderForm" class="form form-control" role="form" action="{% url 'web:order' car.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {{form.as_p}}
+                            <div class="row justify-content-between">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-success" id="clickBtn">Comprar</button>
+                                </div>
+                                <div class="col">
+                                    <button id="orderClose" type="button" class="btn btn-danger float-right" data-dismiss="modal">Cerrar</button>
+                                </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/additional-methods.js' %}" type="text/javascript"></script>
+
+    <script>
+
+        var date = new Date();
+        date.setDate(date.getDate()-1);
+
+        $('.datepicker').datepicker({
+            format: "dd/mm/yyyy",
+            autoclose: true,
+            startDate: date
+        });
+
+        $("#orderForm").submit(function(e) {
+
+            var url = "{% url 'web:order' car.id %}";
+            $.ajax({
+                   type: "POST",
+                   url: url,
+                   data: $("#orderForm").serialize(),
+                   success: function(data)
+                   {
+                        id_order=parseInt(data);
+                        if(typeof(id_order)==="number"){
+                            window.location.assign('../compra/'+id_order)
+                        }
+                        else{
+                            alert("¡Uh Oh! ¡Algo está mal! Informe al desarrollador del siguiente error: " + data);
+                        }                        
+                   }
+                 });
+            $("#orderClose").trigger("click");
+            e.preventDefault();
+        });
+
+    </script>
+
+{% endblock %}

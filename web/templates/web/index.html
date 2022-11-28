@@ -1,0 +1,207 @@
+{% extends 'web/base.html' %}
+{% load staticfiles %}
+{% block title %}CarSold{% endblock %}
+{% block css %}
+    <link href="{% static 'css/creative.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+{% block menu %}
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#newArrival">Ubicaciones</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#services">Servicios</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#cars">Catálogo</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Contacto</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:dashboard' %}">Bienvenido, {{ user.last_name }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:logout' %}">Salir</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:login' %}">Iniciar sesión</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:register' %}">Registrarse</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}
+{% block body %}
+    <header class="masthead text-center text-white d-flex">
+        <div class="container m-auto">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h1 class="text-uppercase m-auto p-auto pt-5">
+                        <strong>Encuentra tu proxima aventura aquí</strong>
+                    </h1>
+                    
+                </div>
+                <div class="col-lg-8 mx-auto mt-5 mb-5" >
+                    
+                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="{% url 'web:cars' %}">Buscar vehiculos</a>
+                    
+                </div>
+                <div class="col-lg-8 mt-5 mx-auto pt-5" style="height: 100%;">
+                    <p class="text-faded m-auto pt-5" id="subtitulo">VENTA DE TODO TIPO DE VEHICULOS</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-primary" id="newArrival">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading" id="segundoTitulo">Nuestras salas de exposición</h2>
+                    <hr class="my-4">
+                </div>
+                <div class="col-lg-12 mx-auto text-center">
+                    <div id="demo" class="carousel slide" data-ride="carousel">
+                        <ul class="carousel-indicators">
+                            <li data-target="#demo" data-slide-to="0" class="active"></li>
+                            <li data-target="#demo" data-slide-to="1"></li>
+                            <li data-target="#demo" data-slide-to="2"></li>
+                        </ul>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="{% static 'images/Bogota.jpg' %}" alt="Bogota" width="1100" height="500">
+                                <div class="carousel-caption">
+                                    <h3>Bogota</h3>
+                                    <p>Zona Norte, Bogota, CP 110131, COL</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{% static 'images/Buenos_aires.jpg' %}" alt="Buenos Aires" width="1100" height="500">
+                                <div class="carousel-caption">
+                                    <h3>Buenos Aires</h3>
+                                    <p>Villa Insuperable, Buenos Aires, CP B1752, ARG</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="{% static 'images/Quito.jpg' %}" alt="Quito" width="1100" height="500">
+                                <div class="carousel-caption">
+                                    <h3>Quito</h3>
+                                    <p >La Magdalena, Quito, CP 170111, ECU</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#demo" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">A su servicio</h2>
+                    <hr class="my-4">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box mt-5 mx-auto">
+                        <i class="fa fa-4x fa-balance-scale text-primary mb-3 sr-icons"></i>
+<<<<<<< HEAD
+                        <h3 class="mb-3">Compara los coches</h3>
+=======
+                        <h3 class="mb-3">Comparar vehículos</h3>
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+                        <p class="text-muted mb-0">Nuestro sitio web le permitirá comparar entre los coches y le permitirá decidir el mejor coche para usted.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box mt-5 mx-auto">
+                        <i class="fa fa-4x fa-clock-o text-primary mb-3 sr-icons"></i>
+                        <h3 class="mb-3">Entrega a tiempo</h3>
+<<<<<<< HEAD
+                        <p class="text-muted mb-0">Una vez que pides el coche de tus sueños, te lo entregamos en la fecha prevista. ¡Sin compromisos!</p>
+=======
+                        <p class="text-muted mb-0">Una vez que pides el coche de tus sueños, te lo entregamos en la fecha prevista. Sin compromisos!</p>
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box mt-5 mx-auto">
+                        <i class="fa fa-4x fa-newspaper-o text-primary mb-3 sr-icons"></i>
+                        <h3 class="mb-3">Siempre actualizado</h3>
+                        <p class="text-muted mb-0">Actualizamos nuestras existencias y nuestro catálogo a medida que llegan las novedades.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box mt-5 mx-auto">
+                        <i class="fa fa-4x fa-life-ring text-primary mb-3 sr-icons"></i>
+                        <h3 class="mb-3">Soporte</h3>
+<<<<<<< HEAD
+                        <p class="text-muted mb-0">Le ofrecemos asistencia para su coche, incluso después de que se lo entreguemos.</p>
+=======
+                        <p class="text-muted mb-0">Le proporcionamos asistencia para su coche, incluso después de que se lo entreguemos!</p>
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-dark text-white" id="cars">
+        <div class="container text-center">
+<<<<<<< HEAD
+            <h2 class="mb-4">¡Mira todos los coches!</h2>
+            <a class="btn btn-light btn-xl sr-button" href="{% url 'web:cars' %}">Haga clic aquí</a>
+=======
+            <h2 class="mb-4">Mira todos los coches!</h2>
+            <a class="btn btn-light btn-xl sr-button" href="{% url 'web:cars' %}">Click aquí</a>
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+<<<<<<< HEAD
+                    <h2 class="section-heading">¡Pongámonos en contacto!</h2>
+=======
+                    <h2 class="section-heading">Pongámonos en contacto!</h2>
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+                    <hr class="my-4">
+                    <p class="mb-5">¿Listo para comprarnos el próximo coche? ¡Estupendo! Llámenos 
+                        o envíenos un correo electrónico y nos pondremos en contacto contigo lo antes posible.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 ml-auto text-center">
+                    <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
+                    <p>123-456-6789</p>
+                </div>
+                <div class="col-lg-4 mr-auto text-center">
+                    <i class="fa fa-envelope-o fa-3x mb-3 sr-contact"></i>
+                    <p>
+                        <a href="mailto:info@CarSold.com">info@CarSold.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/creative.js' %}"></script>
+{% endblock %}

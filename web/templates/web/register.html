@@ -1,0 +1,60 @@
+{% extends 'web/base_alt.html' %}
+{% load staticfiles %}
+{% load bootstrap4 %}
+{% block title %}Registrarse{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/css_style.default.css' %}" id="theme-stylesheet">
+{% endblock %}
+{% block menu %}
+    <ul class="navbar-nav ml-auto align-items-center">
+        <li class="nav-item active">
+<<<<<<< HEAD
+            <a class="nav-link js-scroll-trigger" href="{% url 'web:login' %}">Inicio de sesión</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link js-scroll-trigger active" href="{% url 'web:register' %}">Registro</a>
+=======
+            <a class="nav-link js-scroll-trigger" href="{% url 'web:login' %}">Iniciar sesión</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link js-scroll-trigger active" href="{% url 'web:register' %}">Registrarse</a>
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+        </li>
+    </ul>
+{% endblock %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="card" style="margin-top: 1em">
+                <div class="card-body">
+                    <h3>Registrarse</h3>
+                    {% if error_message %}
+                        <p><strong>{{ error_message }}</strong></p>
+                    {% endif %}
+                    <form role="form" action="{% url 'web:register'%}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% bootstrap_form uform %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+<<<<<<< HEAD
+                                <button type="submit" class="btn btn-success" id="register">Registro</button>
+=======
+                                <button type="submit" class="btn btn-success" id="register">Registrarse</button>
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+<<<<<<< HEAD
+                    ¿Ya tiene una cuenta? <a href="{% url 'web:login' %}">Haga clic aquí</a> ¡para iniciar sesión!
+=======
+                    ¿Ya tienes una cuenta? <a href="{% url 'web:login' %}">Click aquí</a> Para Iniciar sesión!
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

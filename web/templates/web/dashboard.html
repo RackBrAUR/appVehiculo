@@ -1,0 +1,73 @@
+{% extends 'web/base_alt.html' %}
+{% load staticfiles %}
+{% block title %}Panel de control{% endblock %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/css_style.default.css' %}" id="theme-stylesheet">
+{% endblock %}
+
+{% block menu %}
+    <ul class="navbar-nav ml-auto align-items-center">
+        <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="{% url 'web:cars' %}">Vehículos</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="#">Bienvenido, {{ user.last_name }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-t rigger" href="{% url 'web:logout' %}">Salir</a>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:login' %}">Iniciar sesión</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link js-scroll-trigger" href="{% url 'web:register' %}">Registrarse</a>
+            </li>
+        {% endif %}
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+
+        <!-- Page Heading -->
+        <!-- /.row -->
+    </div>
+    <div class="container">
+
+        <!-- Page Heading -->
+<<<<<<< HEAD
+        <h3 class="my-4">Ordenes
+{#            <small>Texto Secundario</small>#}
+=======
+        <h3 class="my-4">Pedidos
+{#            <small>Texto secundario</small>#}
+>>>>>>> 7c44cb7b81e4530d90d3514b0d6b2ee311c3680e
+        </h3>
+
+        <div class="row">
+            {% if orders %}
+                {% for order in orders %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+                        <div class="card h-100">
+                            <a href="{% url 'web:details' order.car.id %}"><img class="card-img-top" src="{{ order.car.foto.url }}" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="{% url 'web:details' order.car.id %}">{{ order.car.marca }} {{ order.car.modelo }}</a>
+                                </h4>
+                                <p class="card-text">
+                                    Monto: $ {{ order.amount }}<br>
+                                    Fecha del pedido: {{ order.order_time }}<br>
+                                    Dirección: {{ order.address }}<br>
+                                    Enviado: {% if order.is_delivered %}<i class="fa fa-check"></i>{% else %}<i class="fa fa-times"></i>{% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <!-- /.row -->
+    </div>
+{% endblock %}
