@@ -1,10 +1,10 @@
-# App de ayudas
+# App de vehiculos
 
 Este es un proyecto para el cuarto ciclo de aprendizaje de programación básica de MINTIC Colombia
 
 ### ¿Para qué es este repositorio?
 
-* Sistema para una app para tutoriales ayuda y ensenianza.
+* Sistema para una app para app de venta de vehiculos.
 * El sistema gestiona el control de compras del contenido visto.
 * El sistema está construído con Django y postgresql.
 
